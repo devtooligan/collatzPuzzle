@@ -1,4 +1,5 @@
 #define macro MAIN() = takes (0) returns (0) {
+    // skip routing, ignore fn sig, load arg directly
     0x04
     calldataload
     0x02
@@ -7,6 +8,7 @@
     iszero
     0x11
     jumpi
+    // multiply by 6 and add 2 (instead of x3 and +1) so we can always div / 2 to skip a jump to save bytecode
     0x06
     mul
     0x02
@@ -15,9 +17,9 @@
     0x02
     swap1
     div
-    returndatasize
+    returndatasize // used for 0x0 to save runtime gas
     mstore
     0x20
-    returndatasize
+    returndatasize // used for 0x0 to save runtime gas
     return
 }
